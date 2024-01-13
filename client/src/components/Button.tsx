@@ -1,9 +1,11 @@
-export default function Button({value}: {value: string}) {
+export default function Button({width, bgColor, textColor, value}: {width: string, bgColor: string, textColor: string, value: string}) {
+
+    const className = `${bgColor} ${textColor} text-sm p-2 ${width} rounded-md`;
 
     return (
 
         <>
-        <button className="bg-primary text-white p-2 w-28 rounded-md" >{value}</button>
+        <button className= {className}>{value}</button>
         </>
     )
 }
