@@ -8,12 +8,12 @@ export default function Home() {
         <Nav></Nav>
       </nav>
 
-      <section className="ml-8 mt-12 flex-col space-y-4">
+      <section className="ml-8 mt-8 sm:mt-20">
 
 
-        <section className="mb-8">
-          <h1 className="text-2xl">Connect with others through blogging</h1>
-          <p className="text-base mt-4 sm:text-lg">
+        <section className="mb-8 text-center sm:mb-20">
+          <h1 className="text-2xl sm:text-4xl">Connect with others through blogging</h1>
+          <p className="text-base mt-4 sm:text-xl">
             Explore, Share, and Connect - Your Online Community Awaits
           </p>
         </section>
