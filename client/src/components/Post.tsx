@@ -19,7 +19,12 @@ function Post() {
           </p>
 
       <div className="text-right">
-      <Button width ="w-24" bgColor="bg-primary" textColor="text-white" value = "Read more"/>
+      <button className="bg-primary text-white text-sm p-2 rounded w-24">Read more</button>
+
+      {/* <Button onClick={()=> console.log('read more') }width ="w-24" bgColor="bg-primary" textColor="text-white" value = "Read more"
+      
+   
+      /> */}
       </div>       
         </div>
       </div>

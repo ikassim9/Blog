@@ -10,4 +10,17 @@
       @apply font-robot
       bg-background
     }
+    
+
+  }
+
+  .field {
+    @apply bg-field p-2 rounded  w-full
+   }
+
+ 
+   .button {
+
+    @apply bg-primary text-white  p-2 rounded-md text-center
+  
   }
