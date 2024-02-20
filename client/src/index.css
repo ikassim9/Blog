@@ -15,7 +15,7 @@
   }
 
   .field {
-    @apply bg-field p-2 rounded  w-full
+    @apply bg-field p-2 rounded  w-full mt-1
    }
 
  
