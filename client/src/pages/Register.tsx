@@ -1,44 +1,60 @@
 import { Link } from "react-router-dom";
 import Auth from "../services/Auth";
 import FirebaseAuth from "../services/FirebaseAuth";
-import { createUserWithEmailAndPassword, signOut } from "firebase/auth";
-import { useState } from "react";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { SubmitHandler, useForm } from "react-hook-form"
 
+ 
 export default function Register() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
 
-  const registerUser = async (event: any) => {
-    const url = "/auth/register";
-    event.preventDefault();
+  // use to support typescript
+  type FormValues = {
+    name: string
+    email: string
+    password: string
+  }
 
+  // validate only on form submission
+  const {
+    register,
+    handleSubmit,
+    setError,
+    formState: { errors },
+  } = useForm<FormValues>({
+    mode: "onSubmit",
+    reValidateMode: "onSubmit",
+  });
+
+  const registerUser: SubmitHandler<FormValues> = async (form: FormValues) => {
+    const url = "/user/register";
+
+    const { name, email, password } = form;
+ 
     createUserWithEmailAndPassword(FirebaseAuth, email, password)
       .then(async (userCredential) => {
         // Signed up
 
-        console.log(userCredential.user);
+        const user = userCredential.user;
 
-        const userToken = await userCredential.user.getIdToken();
-        const userId = await userCredential.user.uid;
+        const authToken = await user.getIdToken();
 
-        const user = {
-          Name: name,
-          UserID: userId,
-        };
-
-        await Auth.register(url, user, userToken)
+        await Auth.register(url, name, authToken)
           .then((response) => console.log(response.data))
           .catch((error) => {});
         // ...
       })
       .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorCode);
-        console.log(errorMessage);
-        // ..
+        switch (error.code) {
+          case "auth/email-already-in-use": {
+            setError("email", {
+              message: "Email already exists",
+            });
+          }
+        }
+
+        console.error(error.code);
       });
+
   };
 
   return (
@@ -52,7 +68,7 @@ export default function Register() {
           <form
             action="POST"
             className="space-y-5 group"
-            onSubmit={registerUser}
+            onSubmit={handleSubmit(registerUser)}
             noValidate
           >
             <div>
@@ -60,57 +76,49 @@ export default function Register() {
                 Name
               </label>
               <input
-                className="field invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 peer"
+                {...register("name", { required: "Please enter a name" })}
+                className="field"
                 type="text"
-                name="name"
                 placeholder="John"
-                required
-                pattern=".{1,}"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
               />
-
-              <span className="mt-2 hidden text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
-                Please enter a name
-              </span>
+              <p className="mt-3 text-red-500">{errors.name?.message}</p>
             </div>
 
             <div>
               <label htmlFor="email">Email</label>
               <input
-                className="field invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 peer"
+                {...register("email", {
+                  required: "Please enter your email",
+                  pattern: {
+                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                    message: "Please enter a valid email",
+                  },                
+                })}
+                className="field"
                 type="email"
-                name="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
                 placeholder="john1234@gmail.com"
-                required
-                pattern="/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/"
               />
-              <span className="mt-2 hidden text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
-                Please enter a valid email address
-              </span>
+              <p className="mt-3 text-red-500">{errors.email?.message}</p>
             </div>
 
             <div>
               <label htmlFor="password">Password</label>
               <input
-                className="field invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 peer"
+                {...register("password", {
+                  required: "Please enter your password",
+                  minLength: {
+                    value: 6,
+                    message: "password must be at least 6 characters",
+                  },
+                })}
+                className="field"
                 type="password"
-                name="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
                 placeholder="6+ characters"
-                required
-                pattern=".{7,}"
               />
-
-              <span className="mt-2 text-sm hidden text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
-                Password must be at least 6 characters
-              </span>
+              <p className="mt-3 text-red-500">{errors.password?.message}</p>
             </div>
 
-            <button className="bg-primary text-white  p-2 rounded-md w-full group-invalid:pointer-events-none group-invalid:opacity-30">
+            <button className="bg-primary text-white  p-2 rounded-md w-full">
               Sign up
             </button>
             <span className="block">
