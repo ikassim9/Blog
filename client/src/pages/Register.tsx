@@ -3,14 +3,20 @@ import Auth from "../services/Auth";
 import FirebaseAuth from "../services/FirebaseAuth";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import Nav from "../components/Nav";
 
 export default function Register() {
+
+  const navigate = useNavigate();
+
   // use to support typescript
   type FormValues = {
     name: string;
     email: string;
     password: string;
     emailExistError: string;
+    internalError: string;
   };
 
   // validate only on form submission
@@ -18,6 +24,7 @@ export default function Register() {
     register,
     handleSubmit,
     setError,
+    reset,
     clearErrors,
     formState: { errors },
   } = useForm<FormValues>({
@@ -38,7 +45,18 @@ export default function Register() {
 
         await Auth.register(url, name, authToken)
           .then((response) => console.log(response.data))
-          .catch((error) => {});
+          .catch((error) => {
+
+            setError("internalError", {
+              type: "Server",
+              message: "Something went wrong. Please try again later",
+            });
+            
+          });
+
+          // resets the form
+          reset();
+      
         // ...
       })
       .catch((error) => {
@@ -46,17 +64,17 @@ export default function Register() {
           case "auth/email-already-in-use": {
             setError("emailExistError", {
               type: "Server",
-              message: "Email already exists",
+              message: "This email is already taken",
             });
           }
         }
-
-        console.error(error.code);
       });
   };
 
   return (
     <>
+
+    <Nav></Nav>
       <div className="flex flex-col justify-center items-center h-screen">
         <div className="bg-white p-16 rounded shadow-2xl">
           <h1 className="text-2xl  mb-10 text-gray text-center">
