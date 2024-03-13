@@ -1,12 +1,14 @@
 import { Link } from "react-router-dom";
 import Auth from "../services/Auth";
-import FirebaseAuth from "../services/FirebaseAuth";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import {FirebaseAuth} from "../services/FirebaseAuth";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import Nav from "../components/Nav";
+import { createUserWithEmailAndPassword, signOut } from "firebase/auth";
+
 
 export default function Register() {
+
 
   const navigate = useNavigate();
 
@@ -24,7 +26,6 @@ export default function Register() {
     register,
     handleSubmit,
     setError,
-    reset,
     clearErrors,
     formState: { errors },
   } = useForm<FormValues>({
@@ -32,13 +33,15 @@ export default function Register() {
     reValidateMode: "onSubmit",
   });
 
+
   const registerUser: SubmitHandler<FormValues> = async (form: FormValues) => {
     const url = "/user/register";
 
     const { name, email, password } = form;
 
+  
     createUserWithEmailAndPassword(FirebaseAuth, email, password)
-      .then(async (userCredential) => {
+      .then(async (userCredential: any) => {
         const user = userCredential.user;
 
         const authToken = await user.getIdToken();
@@ -54,12 +57,11 @@ export default function Register() {
             
           });
 
-          // resets the form
-          reset();
-      
+         navigate("/");
+
         // ...
       })
-      .catch((error) => {
+      .catch((error : any) => {
         switch (error.code) {
           case "auth/email-already-in-use": {
             setError("emailExistError", {
@@ -73,11 +75,10 @@ export default function Register() {
 
   return (
     <>
-
     <Nav></Nav>
       <div className="flex flex-col justify-center items-center h-screen">
-        <div className="bg-white p-16 rounded shadow-2xl">
-          <h1 className="text-2xl  mb-10 text-gray text-center">
+        <div className="bg-white p-8 rounded shadow-2xl w-96">
+          <h1 className="text-2xl mb-8 text-center">
             Create your account
           </h1>
 

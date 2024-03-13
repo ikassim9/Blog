@@ -24,4 +24,4 @@ const app = initializeApp(firebaseConfig);
 // Initialize Firebase Authentication and get a reference to the service
 const FirebaseAuth = getAuth(app);
 
-export default FirebaseAuth;
+export {FirebaseAuth}
