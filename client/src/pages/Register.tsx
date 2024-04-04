@@ -4,11 +4,13 @@ import {FirebaseAuth} from "../services/FirebaseAuth";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import Nav from "../components/Nav";
-import { createUserWithEmailAndPassword, signOut } from "firebase/auth";
+import { createUserWithEmailAndPassword, sendEmailVerification, signOut } from "firebase/auth";
+import { useState } from "react";
 
 
 export default function Register() {
 
+  const [message, setMessage] = useState('');
 
   const navigate = useNavigate();
 
@@ -26,6 +28,7 @@ export default function Register() {
     register,
     handleSubmit,
     setError,
+    reset,
     clearErrors,
     formState: { errors },
   } = useForm<FormValues>({
@@ -39,7 +42,7 @@ export default function Register() {
 
     const { name, email, password } = form;
 
-  
+ 
     createUserWithEmailAndPassword(FirebaseAuth, email, password)
       .then(async (userCredential: any) => {
         const user = userCredential.user;
@@ -57,7 +60,16 @@ export default function Register() {
             
           });
 
-         navigate("/");
+          sendEmailVerification(user);
+
+          setMessage("A verification email has been sent to your email address");
+
+          signOut(FirebaseAuth);
+
+          reset();
+
+        // navigate("/");
+        
 
         // ...
       })
@@ -75,12 +87,22 @@ export default function Register() {
 
   return (
     <>
-    <Nav></Nav>
+      <Nav></Nav>
       <div className="flex flex-col justify-center items-center h-screen">
+        {
+          message.length > 0 &&
+          <div
+            className="bg-blue-100 border-t border-b border-blue-500 text-blue-700 px-4 py-3 mb-4"
+            role="alert"
+          >
+            <p className="text-sm">
+             {message}
+            </p>
+          </div>
+        }
+
         <div className="bg-white p-8 rounded shadow-2xl w-96">
-          <h1 className="text-2xl mb-8 text-center">
-            Create your account
-          </h1>
+          <h1 className="text-2xl mb-8 text-center">Create your account</h1>
 
           <form
             action="POST"

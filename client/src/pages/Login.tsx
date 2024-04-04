@@ -1,11 +1,14 @@
 import { Link, useNavigate } from "react-router-dom";
 import Nav from "../components/Nav";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { signInWithEmailAndPassword  } from "firebase/auth";
+import { sendEmailVerification, signInWithEmailAndPassword, signOut  } from "firebase/auth";
 import { FirebaseAuth } from "../services/FirebaseAuth";
+import { useState } from "react";
 
 
 export default function Login() {
+  
+  const [message, setMessage] = useState('');
 
   const navigate = useNavigate();
 
@@ -42,16 +45,26 @@ export default function Login() {
     signInWithEmailAndPassword(FirebaseAuth, email, password)
     .then((userCredential) => {
       // Signed in
+      const user = userCredential.user;
 
+      if(user.emailVerified) {
 
       navigate("/")
  
- 
+      }
+      else{
+           sendEmailVerification(user);
+
+          setMessage("A verification email has been sent to your email address.");
+        signOut(FirebaseAuth);
+      }
+
+      reset();
       // ...
     })
     .catch((error) => {
       const errorCode = error.code;
-      debugger;
+     // debugger;
       switch (errorCode) {
         case "auth/invalid-credential": {
           setError("invalidCredentialsError", {
@@ -81,6 +94,18 @@ export default function Login() {
       <Nav></Nav>
 
       <div className="flex flex-col justify-center items-center h-screen">
+
+      {
+          message.length > 0 &&
+          <div
+            className="bg-blue-100 border-t border-b border-blue-500 text-blue-700 px-4 py-3 mb-4"
+            role="alert"
+          >
+            <p className="text-sm">
+             {message}
+            </p>
+          </div>
+        }
         <div className="bg-white p-8 rounded shadow-2xl w-96">
           
           <h1 className="text-2xl mb-8 text-center">Welcome back</h1>
@@ -142,7 +167,7 @@ export default function Login() {
               </p>
             </div>
             <div>
-              <Link to="#" className="text-gray-600">Forgot password?</Link>
+              <Link to="/users/forgot-password" className="text-gray-600">Forgot password?</Link>
             </div>
 
             <button
