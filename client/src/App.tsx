@@ -4,7 +4,8 @@ import Register from './pages/Register';
 import Login from './pages/Login';
 import PasswordReset from './pages/PasswordReset';
 import ForgotPassword from './pages/ForgotPassword';
-
+import CreatePost from './pages/CreatePost';
+import PrivateRoute from './components/PrivateRoute';
 export default function App() {
   return (
     <BrowserRouter>
@@ -14,6 +15,9 @@ export default function App() {
       <Route path='/users/login' element= {<Login />}></Route>
       <Route path='/users/reset-password' element ={<PasswordReset />}></Route>
       <Route path='/users/forgot-password' element ={<ForgotPassword />}></Route>
+      <Route path='/users/forgot-password' element ={<ForgotPassword />}></Route>
+      <Route path='/users/create-post' element= {<PrivateRoute><CreatePost /></PrivateRoute>}></Route>
+
     </Routes>
     </BrowserRouter>
   );
