@@ -77,7 +77,7 @@ export default function Login() {
       
         case "auth/too-many-requests": {
           setError("tooManyPasswordAttempts", {
-            message: "Too many login faile attempts. Please reset your password or try again later"
+            message: "Too many login failed attempts. Please reset your password or try again later"
           });
 
           break;
@@ -109,8 +109,8 @@ export default function Login() {
         <div className="bg-white p-8 rounded shadow-2xl w-96">
           
           <h1 className="text-2xl mb-8 text-center">Welcome back</h1>
-          <p data-cy="error_email" className="mt-3 text-center text-sm text-red-500">{errors.invalidCredentialsError?.message}</p>
-          <p data-cy="error_email" className="mt-3 text-center text-red-500">{errors.tooManyPasswordAttempts?.message}</p>
+          <p data-cy="error_invalidCredentials" className="mt-3 text-center text-sm text-red-500">{errors.invalidCredentialsError?.message}</p>
+          <p data-cy="error_tooManyPasswordAttempts" className="mt-3 text-center text-red-500">{errors.tooManyPasswordAttempts?.message}</p>
 
           <form
             action="POST"

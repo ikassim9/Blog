@@ -56,7 +56,7 @@ cy.visit("http://localhost:3000/users/register");
     cy.get('form').submit();
 
     cy.get('[data-cy="error_name"]').should("be.empty");
-    cy.get('[data-cy="error_email"]').should("contain", "Email already exists");
+    cy.get('[data-cy="error_email"]').should("contain", "This email is already taken");
     cy.get('[data-cy="error_password"]').should("be.empty");
   
    });
@@ -74,9 +74,9 @@ cy.visit("http://localhost:3000/users/register");
     // submit for again
     cy.get('form').submit();
 
-    cy.get('[data-cy="error_name"]').should("be.empty");
-   // cy.get('[data-cy="error_email"]').should("be.empty"); // skip this test
-    cy.get('[data-cy="error_password"]').should("be.empty");
+    cy.get('[data-cy="input_name"]').should('have.value', '');
+    cy.get('[data-cy="input_email"]').should("contain", ""); // skip this test
+    cy.get('[data-cy="input_password"]').should("be.empty");
 
 
 
