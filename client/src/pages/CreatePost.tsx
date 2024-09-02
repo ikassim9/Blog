@@ -4,12 +4,15 @@ import PostService from "../services/PostService";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { FirebaseAuth } from "../services/FirebaseAuth";
 import Nav from "../components/Nav";
+import { useState } from "react";
 
 export default function CreatePost() {
 
 
   const [currentUser] = useAuthState(FirebaseAuth);
+  const [message, setMessage] = useState('');
 
+  const [error, setErrorMessage] = useState('');
   
   // use to support typescript
   type FormValues = {
@@ -43,10 +46,14 @@ export default function CreatePost() {
         .then((response) => {
           console.log("response", response.data);
           reset();
+          setMessage('post created successfully');
+          setErrorMessage('');
         })
         .catch((error) => {
           console.log(error);
- 
+            debugger;
+            setErrorMessage('Something went wrong. Please try again');
+            setMessage('');
         });
     }
     
@@ -58,6 +65,32 @@ export default function CreatePost() {
 
     <Nav />
       <div className="p-4 max-w-3xl mx-auto min-h-screen">
+
+      {
+          message.length > 0 &&
+          <div
+            className="bg-green-100 border-t border-b border-green-500 text-black px-4 py-3 mb-4"
+            role="alert"
+          >
+            <p className="text-sm">
+             {message}
+            </p>
+          </div>
+        }
+
+        
+      {
+          error.length > 0 &&
+          <div
+            className="bg-red-100 border-t border-b red-green-500 text-black px-4 py-3 mb-4"
+            role="alert"
+          >
+            <p className="text-sm">
+             {error}
+            </p>
+          </div>
+        }
+
         <h1 className="text-center text-3xl">Create post</h1>
 
         <form

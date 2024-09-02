@@ -4,6 +4,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { sendEmailVerification, signInWithEmailAndPassword, signOut  } from "firebase/auth";
 import { FirebaseAuth } from "../services/FirebaseAuth";
 import { useState } from "react";
+import Auth from "../services/Auth";
 
 
 export default function Login() {
@@ -40,12 +41,18 @@ export default function Login() {
 
     const url = "/user/login";
 
+    // first validate on server
+
     const {email, password } = form;
 
     signInWithEmailAndPassword(FirebaseAuth, email, password)
-    .then((userCredential) => {
+    .then(async (userCredential) => {
       // Signed in
       const user = userCredential.user;
+
+      const authToken = await user.getIdToken();
+
+      await Auth.login(authToken);
 
       if(user.emailVerified) {
 
@@ -63,6 +70,7 @@ export default function Login() {
       // ...
     })
     .catch((error) => {
+      debugger;
       const errorCode = error.code;
      // debugger;
       switch (errorCode) {
@@ -74,7 +82,6 @@ export default function Login() {
           break;
         }
 
-      
         case "auth/too-many-requests": {
           setError("tooManyPasswordAttempts", {
             message: "Too many login failed attempts. Please reset your password or try again later"

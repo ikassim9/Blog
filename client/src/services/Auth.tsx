@@ -12,7 +12,19 @@ const Auth = {
     });
   },
 
-  async login(url: string) {},
+  async login(authToken: string) {
+
+    const url = '/user/login';
+    
+    const headers = {
+      Authorization: "Bearer " + authToken,
+    };
+
+    return await axios.post(url, null, {
+      headers: headers,
+    });
+
+  },
 };
 
 export default Auth;

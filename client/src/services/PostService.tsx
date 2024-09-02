@@ -8,12 +8,21 @@ const PostService = {
     const headers = {
       Authorization: "Bearer " + authToken,
     };
-    debugger;
+ 
     return await axios.post(url, null, {
       params: { title: post.title, description: post.description},
       headers: headers,
     });
   },
+
+
+  async getPosts() {
+
+    const url = "/post/GetPosts";
+
+    return await axios.get(url);
+ 
+  }
 };
 
 export default PostService;
