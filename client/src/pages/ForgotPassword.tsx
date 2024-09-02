@@ -38,8 +38,6 @@ export default function ForgotPassword() {
 
     sendPasswordResetEmail(FirebaseAuth, email).then(() => {
         
-        console.log("Password reset' successfully");
-
         reset();
 
         setMessage('Password reset has been sent to your email')
@@ -53,7 +51,7 @@ export default function ForgotPassword() {
        
     });
 
-    console.log(email)
+   
   };
 
   return (

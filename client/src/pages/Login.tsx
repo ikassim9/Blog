@@ -39,8 +39,6 @@ export default function Login() {
 
   const loginUser: SubmitHandler<FormValues> = async (form: FormValues) => {
 
-    const url = "/user/login";
-
     // first validate on server
 
     const {email, password } = form;
@@ -89,6 +87,11 @@ export default function Login() {
 
           break;
         }
+
+        case "ERR_BAD_RESPONSE":{
+          signOut(FirebaseAuth);
+          setError("internalError",  {message: "Something went wrong. Please try again" })
+        }
       }
       
     });
@@ -98,26 +101,38 @@ export default function Login() {
 
   return (
     <>
-      <Nav></Nav>
+ 
+        <Nav></Nav>
 
       <div className="flex flex-col justify-center items-center h-screen">
-
-      {
-          message.length > 0 &&
+        {message.length > 0 && (
           <div
             className="bg-blue-100 border-t border-b border-blue-500 text-blue-700 px-4 py-3 mb-4"
             role="alert"
           >
-            <p className="text-sm">
-             {message}
-            </p>
+            <p className="text-sm">{message}</p>
           </div>
-        }
+        )}
         <div className="bg-white p-8 rounded shadow-2xl w-96">
-          
           <h1 className="text-2xl mb-8 text-center">Welcome back</h1>
-          <p data-cy="error_invalidCredentials" className="mt-3 text-center text-sm text-red-500">{errors.invalidCredentialsError?.message}</p>
-          <p data-cy="error_tooManyPasswordAttempts" className="mt-3 text-center text-red-500">{errors.tooManyPasswordAttempts?.message}</p>
+          <p
+            data-cy="error_interalError"
+            className="mt-3 text-center text-sm text-red-500"
+          >
+            {errors.internalError?.message}
+          </p>
+          <p
+            data-cy="error_invalidCredentials"
+            className="mt-3 text-center text-sm text-red-500"
+          >
+            {errors.invalidCredentialsError?.message}
+          </p>
+          <p
+            data-cy="error_tooManyPasswordAttempts"
+            className="mt-3 text-center text-red-500"
+          >
+            {errors.tooManyPasswordAttempts?.message}
+          </p>
 
           <form
             action="POST"
@@ -152,11 +167,10 @@ export default function Login() {
             </div>
 
             <div>
-                <label htmlFor="password">Password</label>
+              <label htmlFor="password">Password</label>
               <input
                 {...register("password", {
                   required: "Please enter your password",
-
 
                   onChange: () => {
                     if (errors.invalidCredentialsError?.message) {
@@ -174,7 +188,9 @@ export default function Login() {
               </p>
             </div>
             <div>
-              <Link to="/users/forgot-password" className="text-gray-600">Forgot password?</Link>
+              <Link to="/users/forgot-password" className="text-gray-600">
+                Forgot password?
+              </Link>
             </div>
 
             <button
@@ -189,7 +205,6 @@ export default function Login() {
                 Sign up
               </Link>
             </span>
-       
           </form>
         </div>
       </div>
