@@ -1,1 +1,53 @@
-Front end for blog
+# **API to display marvel characters and its related comics**
+
+### This application will users to peform crud operations by creating/editing and deleting their own blogs. It will also viewing other users blog.
+
+ <br>
+
+# Getting Started
+
+<br>
+
+### You will first need to go to [firebase](https://firebase.google.com/) website. Go to console and create a project. Go to project setting and add a web application. Copy the firebase config into env mentioned below
+
+<br>
+
+# ENV file
+
+<br>
+
+### Create an env file in the client directory
+
+<br>
+
+Replace below with your firebase credentials
+
+```
+REACT_APP_AUTH_DOMAIN=''
+REACT_APP_PROJECT_ID=''
+REACT_APP_STORAGE_BUCKET=''
+REACT_APP_MESSAGING_SENDER_ID=''
+REACT_APP_FIREBASEID=''
+```
+
+<br>
+
+ 
+# Install dependencies
+
+```
+npm install
+```
+
+# Run the application
+
+```
+ 
+npm start
+
+(Go to localhost:3000)
+```
+
+<br>
+
+ 
