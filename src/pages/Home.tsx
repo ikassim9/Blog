@@ -9,56 +9,28 @@ import { IPost } from "../model/IPost";
 export default function Home() {
   const [currentUser] = useAuthState(FirebaseAuth);
 
- // const [posts, setPost] = useState<IPost[]>([]);
+  const [posts, setPost] = useState<IPost[]>([]);
 
-
- const posts = [{
-
-   id: 1,
-   userId: "1",
-   title: "post 1",
-   description: "post 1 description sample",
- },
-
- {
-
-  id: 2,
-  userId: "2",
-  title: "post 2",
-  description: "post 2 description sample",
-
- },
-
- {
-
-  id: 3,
-  userId: "3",
-  title: "post 3 sample",
-  description: "post 2 description sample",
-
- }
-
-]
  
-  // useEffect(() => {
+  useEffect(() => {
 
-  //   const getPosts = async () => {
+    const getPosts = async () => {
  
-  //       await PostService.getPosts()
-  //         .then((response) => {
+        await PostService.getPosts()
+          .then((response) => {
 
-  //           setPost(response.data);
-  //         })
-  //         .catch((error) => {
-  //           console.log(error);
-  //         });
+            setPost(response.data);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
  
-  //   };
+    };
     
  
-  //   getPosts();
+    getPosts();
  
-  // }, []);
+  }, []);
 
   return (
     <>

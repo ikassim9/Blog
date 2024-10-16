@@ -1,7 +1,11 @@
 import axios from "axios";
 
+const api = "https://localhost:44333/api";
+
 const Auth = {
-  async register(url: string, name: string, authToken: string) {
+  async register(name: string, authToken: string) {
+
+    const url = `${api}/user/register`;
     const headers = {
       Authorization: "Bearer " + authToken,
     };
@@ -14,7 +18,7 @@ const Auth = {
 
   async login(authToken: string) {
 
-    const url = '/user/login';
+    const url = `${api}/user/login`;
     
     const headers = {
       Authorization: "Bearer " + authToken,

@@ -38,8 +38,7 @@ export default function Register() {
 
 
   const registerUser: SubmitHandler<FormValues> = async (form: FormValues) => {
-    const url = "/user/register";
-
+ 
     const { name, email, password } = form;
 
  
@@ -49,7 +48,7 @@ export default function Register() {
 
         const authToken = await user.getIdToken();
 
-        await Auth.register(url, name, authToken)
+        await Auth.register(name, authToken)
           .then((response) => console.log(response.data))
           .catch((error) => {
 
