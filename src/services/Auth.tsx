@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const api = "https://localhost:44333/api";
+const api = process.env.REACT_APP_API_ENDPOINT;
 
 const Auth = {
   async register(name: string, authToken: string) {

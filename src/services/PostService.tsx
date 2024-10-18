@@ -1,9 +1,9 @@
 import axios from "axios";
 import { IPost } from "../model/IPost";
 
-const api = "https://localhost:44333/api";
+const api = process.env.REACT_APP_API_ENDPOINT;
 
-
+console.log("api", api);
 const PostService = {
   async createPost(post: IPost, authToken: string) {
 
