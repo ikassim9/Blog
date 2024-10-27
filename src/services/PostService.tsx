@@ -3,7 +3,6 @@ import { IPost } from "../model/IPost";
 
 const api = process.env.REACT_APP_API_ENDPOINT;
 
-console.log("api", api);
 const PostService = {
   async createPost(post: IPost, authToken: string) {
 
