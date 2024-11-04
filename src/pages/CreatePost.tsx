@@ -24,10 +24,7 @@ export default function CreatePost() {
   const {
     register,
     handleSubmit,
-    setError,
     reset,
-    clearErrors,
-    formState: { errors },
   } = useForm<FormValues>({
     mode: "onSubmit",
     reValidateMode: "onSubmit",

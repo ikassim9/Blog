@@ -67,7 +67,7 @@ export default function Register() {
 
           reset();
 
-        // navigate("/");
+        navigate("/");
         
 
         // ...

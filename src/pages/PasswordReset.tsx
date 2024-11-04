@@ -4,8 +4,7 @@ import Nav from "../components/Nav";
 import { Link, useLocation } from "react-router-dom";
 import {confirmPasswordReset } from "firebase/auth";
 import { FirebaseAuth } from "../services/FirebaseAuth";
-import { error } from "console";
-
+ 
 
 
 function useQuery(){

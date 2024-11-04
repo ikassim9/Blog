@@ -2,13 +2,10 @@ import { useEffect, useState } from "react";
 import Nav from "../components/Nav";
 import Post from "../components/Post";
 import PostService from "../services/PostService";
-import { FirebaseAuth } from "../services/FirebaseAuth";
-import { useAuthState } from "react-firebase-hooks/auth";
 import { IPost } from "../model/IPost";
 
 export default function Home() {
-  const [currentUser] = useAuthState(FirebaseAuth);
-
+ 
   const [posts, setPost] = useState<IPost[]>([]);
 
  

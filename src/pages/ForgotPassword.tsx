@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import Nav from "../components/Nav";
 import { Link } from "react-router-dom";
-import { getAuth, sendPasswordResetEmail } from "firebase/auth";
+import {sendPasswordResetEmail } from "firebase/auth";
 import { FirebaseAuth } from "../services/FirebaseAuth";
  
 export default function ForgotPassword() {
@@ -23,9 +23,7 @@ export default function ForgotPassword() {
   const {
     register,
     handleSubmit,
-    setError,
     reset,
-    clearErrors,
     formState: { errors },
   } = useForm<FormValues>({
     mode: "onSubmit",
@@ -48,7 +46,7 @@ export default function ForgotPassword() {
         const errorCode = error.code;
         const errorMessage = error.message;
         
-       
+       console.log(errorCode, errorMessage);
     });
 
    
