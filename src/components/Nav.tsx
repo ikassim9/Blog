@@ -20,7 +20,7 @@ export default function Nav() {
 
       {!user && <Link to="/users/login" className="text-center p-2" >Login</Link>}
 
-      {/* {user &&<Link  to="/users/create-post" className="text-center bg-primary text-white w-28 p-2 rounded-md">Create post</Link>} */}
+      { user &&<Link  to="/users/create-post" className="text-center bg-primary text-white w-28 p-2 rounded-md">Create post</Link>}
           {!user && <Link  to="/users/register" className="text-center bg-primary text-white w-28 p-2 rounded-md">Sign up</Link>}
 
 
