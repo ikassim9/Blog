@@ -10,10 +10,22 @@
       @apply font-robot
       bg-background
     }
+  
     
+  }
+
+  .tiptap ol {
+    list-style: revert;
+    padding-left: 1rem;
 
   }
 
+  .tiptap ul {
+    list-style: revert;
+    padding-left: 1rem;
+
+  }
+  
   .field {
     @apply bg-field p-2 rounded  w-full mt-1
    }
@@ -24,3 +36,15 @@
     @apply bg-primary text-white  p-2 rounded-md text-center
   
   }
+
+ .editor {
+
+  @apply border border-gray-400 p-4  min-h-[12rem] max-h-[12rem] overflow-auto
+
+ }
+
+ .iconSize {
+  @apply w-4 h-4
+ }
+
+ 
