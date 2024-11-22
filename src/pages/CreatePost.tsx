@@ -66,7 +66,7 @@ export default function CreatePost() {
             name="title"
           />
 
-          <TextEditor editable={true} content="sss" ref={descriptionRef}></TextEditor>
+          <TextEditor editable={true} content="" ref={descriptionRef}></TextEditor>
            <button
            type="submit"
             data-cy="submitBtn"
