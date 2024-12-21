@@ -10,7 +10,6 @@ export default function Home() {
 
  
   useEffect(() => {
-
     const getPosts = async () => {
  
         await PostService.getPosts()
@@ -44,10 +43,9 @@ export default function Home() {
             Explore, Share, and Connect - Your Online Community Awaits
           </p>
         </section>
-
-        <section className="grid p-3 gap-4 sm:gap-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+         <section className="grid p-3  gap-4 xl:w-1/2 m-auto">
           {posts.map((post) => (
-            <Post key={post.id} title={post.title} description={post.description}/>
+            <Post key={post.id} title={post.title} description={post.description} thumbnail={post.thumbnail}/>
           ))}
         </section>
       </section>

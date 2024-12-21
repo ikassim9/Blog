@@ -4,15 +4,14 @@ import { IPost } from "../model/IPost";
 const api = process.env.REACT_APP_API_ENDPOINT;
 
 const PostService = {
-  async createPost(post: IPost, authToken: string) {
+  async createPost(post: any, authToken: string) {
 
     const url = `${api}/post/CreatePost`;
     const headers = {
       Authorization: "Bearer " + authToken,
+    
     };
- 
-    return await axios.post(url, null, {
-      params: { title: post.title, description: post.description},
+    return await axios.post(url, post, {      
       headers: headers,
     });
   },

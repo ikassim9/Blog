@@ -1,15 +1,13 @@
 // src/Tiptap.tsx
-import { useEditor, EditorContent, useCurrentEditor } from "@tiptap/react";
+import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { MenuBar } from "./MenuBar";
-import BulletList from "@tiptap/extension-bullet-list";
-import ListItem from "@tiptap/extension-list-item";
-import { forwardRef, Ref, useImperativeHandle, useRef } from "react";
+import { forwardRef, useImperativeHandle } from "react";
  
 
 // define your extension array
 const extensions = [StarterKit];
-
+let s = '<p>apple</p>';
 type TextEditorRef = {
   getHTML: () => string; // Exposes a method to get plain text
  };
@@ -22,15 +20,14 @@ type TextEditorRef = {
 
 
 const TextEditor = forwardRef<TextEditorRef, TextEditorProps>(({content, editable}, ref) => {
-
+ 
   const editor = useEditor({
     extensions: [StarterKit],
-    content,
+    content: content,
     editable,
     editorProps: {
       attributes: {
-        class:
-          "border border-gray-400 p-4 min-h-[12rem] max-h-[12rem] overflow-auto outline-none; list-disc;",
+        class: editable ? "border border-gray-400 p-4 min-h-[12rem] outline-none; list-disc;" : "line-clamp-2 text-clip",
       },
     },
   });

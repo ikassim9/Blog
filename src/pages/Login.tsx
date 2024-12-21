@@ -68,9 +68,7 @@ export default function Login() {
       // ...
     })
     .catch((error) => {
-      debugger;
       const errorCode = error.code;
-     // debugger;
       switch (errorCode) {
         case "auth/invalid-credential": {
           setError("invalidCredentialsError", {

@@ -1,30 +1,30 @@
-import React from "react";
+import TextEditor from "./TextEditor";
 
-function Post({ title, description }: { title: string; description: string }) {
+function Post({
+  title,
+  description,
+  thumbnail,
+}: {
+  title: string;
+  description: string;
+  thumbnail: string;
+}) {
   return (
     <>
-      <div className="max-w-base rounded overflow-hidden shadow-lg">
-        <img
-          className="w-full"
-          src="https://flowbite.com/docs/images/blog/image-1.jpg"
-          alt=""
-        />
-        <div className="px-6 py-4">
-          <div className="font-bold text-xl mb-2">{title}</div>
-          <p className="text-gray-700 text-base">
-           {description}
-          </p>
-
-      <div className="text-right">
-      <button className="bg-primary text-white text-sm p-2 rounded w-24">Read more</button>
-
-      {/* <Button onClick={()=> console.log('read more') }width ="w-24" bgColor="bg-primary" textColor="text-white" value = "Read more"
-      
-   
-      /> */}
-      </div>       
+      <a href="#" className="flex shadow-lg bg-white min-h-[150px]">
+        <div className="flex-1 p-4">
+          <h2 className="text-2xl semi-bold mb-2">{title}</h2>
+          <TextEditor content={description} editable={false} />
         </div>
-      </div>
+
+        {thumbnail && (
+          <img
+            src={thumbnail}
+            alt="Post Thumbnail"
+            className="w-32 object-cover"
+          />
+        )}
+      </a>
     </>
   );
 }

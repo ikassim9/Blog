@@ -3,5 +3,6 @@ export interface IPost {
     userId: string;
     title: string;
     description: string;
- 
+    thumbnail: string
+    
 }
