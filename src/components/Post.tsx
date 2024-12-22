@@ -11,17 +11,18 @@ function Post({
 }) {
   return (
     <>
-      <a href="#" className="flex shadow-lg bg-white min-h-[150px]">
-        <div className="flex-1 p-4">
-          <h2 className="text-2xl semi-bold mb-2">{title}</h2>
+      <a href="#" className="flex shadow-lg bg-white ">
+        <div className="p-4">
+          <h2 className="text-base  bold mb-2">{title}</h2>
           <TextEditor content={description} editable={false} />
+          {/* <h3 className="text-blue-500">Sam</h3> */}
         </div>
 
         {thumbnail && (
           <img
             src={thumbnail}
             alt="Post Thumbnail"
-            className="w-32 object-cover"
+            className="w-32 h-36 object-cover ml-auto"
           />
         )}
       </a>
