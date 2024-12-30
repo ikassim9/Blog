@@ -23,6 +23,14 @@ const PostService = {
 
     return await axios.get(url);
  
+  },
+
+  async getPostById(id: string){
+
+    const url = `${api}/post/getPostById/${id}`;
+
+
+    return await axios.get(url);
   }
 };
 
