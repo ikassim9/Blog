@@ -29,10 +29,6 @@
       {
         "route": "/users/create-post",
         "serve": "/index.html"
-      },
-      {
-        "route": "/{*any}",
-        "serve": "/index.html"
       }
     ]
   }
