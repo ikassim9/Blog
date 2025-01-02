@@ -1,35 +1,9 @@
 {
-    "routes": [
-      {
-        "route": "/",
-        "serve": "/index.html"
-      },
-      {
-        "route": "/users/register",
-        "serve": "/index.html"
-      },
-      {
-        "route": "/users/login",
-        "serve": "/index.html"
-      },
-      {
-        "route": "/users/reset-password",
-        "serve": "/index.html"
-      },
-      {
-        "route": "/users/forgot-password",
-        "serve": "/index.html"
-      },
-
-      {
-        "route": "/posts/:id'",
-        "serve": "/index.html"
-      },
-
-      {
-        "route": "/users/create-post",
-        "serve": "/index.html"
-      }
-    ]
-  }
-  
+  "routes": [
+    {
+      "route": "/*",
+      "serve": "/index.html",
+      "statusCode": 200
+    }
+  ]
+}
