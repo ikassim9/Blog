@@ -3,6 +3,7 @@ import { useLocation, useParams } from "react-router-dom";
 import PostService from "../services/PostService";
 import TextEditor from "../components/TextEditor";
 import Nav from "../components/Nav";
+import SkeletonLoader from "../components/SkeletonLoader";
 
 export default function PostDetail() {
   const { id } = useParams() as { id: string }; // to type to string
@@ -10,19 +11,24 @@ export default function PostDetail() {
   const [post, setPost] = useState<any>();
   const descriptionRef = useRef<any>(null);
   const location = useLocation();
+    const [loading, setLoading] = useState(true);
+
 
   useEffect(() => {
     const getPostDetail = async () => {
-      await PostService.getPostById(id)
-        .then((response) => {
-          setPost(response.data);
-          descriptionRef.current.setHTML(response.data.description);
-          // to scroll top of page on page load
-          window.scrollTo(0, 0);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      try{
+      
+        const post = await PostService.getPostById(id);
+        setPost(post.data);
+        window.scrollTo(0, 0);
+      }
+      catch(error){
+        console.log(error);
+      }
+      finally{
+        setLoading(false)
+      }
+     
     };
 
     getPostDetail();
@@ -31,8 +37,10 @@ export default function PostDetail() {
   return (
     <>
       <Nav />
-
-      <div className="min-h-screen p-2 mt-8">
+      {loading ? (
+     <SkeletonLoader />
+      ): (
+        <div className="min-h-screen p-2 mt-8">
         <div className="xl:w-1/2 m-auto">
           <section>
             {post?.thumbnail && (
@@ -54,6 +62,9 @@ export default function PostDetail() {
           </section>
         </div>
       </div>
+
+      )}
+     
     </>
   );
 }

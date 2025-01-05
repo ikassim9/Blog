@@ -3,28 +3,26 @@ import Nav from "../components/Nav";
 import Post from "../components/Post";
 import PostService from "../services/PostService";
 import { IPost } from "../model/IPost";
+import SkeletonLoader from "../components/SkeletonLoader";
 
 export default function Home() {
  
   const [posts, setPost] = useState<IPost[]>([]);
-
+  const [loading, setLoading] = useState(true);
  
   useEffect(() => {
     const getPosts = async () => {
-        await PostService.getPosts()
-          .then((response) => {
-
-            setPost(response.data);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
- 
+      try {
+        const response = await PostService.getPosts();
+        setPost(response.data);
+      } catch (error) {
+        console.log(error);
+      } finally {
+       setLoading(false);
+      }
     };
-    
- 
+
     getPosts();
- 
   }, []);
 
   return (
@@ -33,6 +31,11 @@ export default function Home() {
         <Nav></Nav>
       </nav>
 
+     {loading ? (
+
+      <SkeletonLoader />
+
+     ) :(
       <section className="mt-8 sm:mt-20">
         <section className="mb-8 text-center sm:mb-20">
           <h1 className="text-2xl sm:text-4xl">
@@ -48,6 +51,8 @@ export default function Home() {
           ))}
         </section>
       </section>
+     ) }
+      
     </>
   );
 }
