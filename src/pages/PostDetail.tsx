@@ -18,9 +18,12 @@ export default function PostDetail() {
     const getPostDetail = async () => {
       try{
       
-        const post = await PostService.getPostById(id);
-        setPost(post.data);
+        const response = await PostService.getPostById(id);
+        setPost(response.data);
         window.scrollTo(0, 0);
+
+        if (descriptionRef.current != null)
+          descriptionRef.current.setHTML(response.data.description);
       }
       catch(error){
         console.log(error);
