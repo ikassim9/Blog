@@ -4,6 +4,7 @@ import Post from "../components/Post";
 import PostService from "../services/PostService";
 import { IPost } from "../model/IPost";
 import SkeletonLoader from "../components/SkeletonLoader";
+import Footer from "../components/Footer";
 
 export default function Home() {
  
@@ -50,6 +51,7 @@ export default function Home() {
             <Post key={post.id} post={post}/>
           ))}
         </section>
+        <Footer></Footer>
       </section>
      ) }
       
