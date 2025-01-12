@@ -4,12 +4,12 @@ export default function Footer() {
     return (
 
         <>
+        
+        <footer className="bg-primary p-4 mt-auto">
 
-        <div className="bg-primary p-4 mt-4">
-
-            <h3 className="text-center text-white">Built by Ismail Kassim</h3>
-            
-        </div>
+            <h3 className="text-center text-white">© Ismail Kassim 2025 - All Rights Reserved.</h3>
+ 
+        </footer>
         </>
     )
 

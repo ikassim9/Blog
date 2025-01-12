@@ -5,6 +5,7 @@ import { sendEmailVerification, signInWithEmailAndPassword, signOut  } from "fir
 import { FirebaseAuth } from "../services/FirebaseAuth";
 import { useState } from "react";
 import Auth from "../services/Auth";
+import Footer from "../components/Footer";
 
 
 export default function Login() {
@@ -99,10 +100,15 @@ export default function Login() {
 
   return (
     <>
- 
-        <Nav></Nav>
 
-      <div className="flex flex-col justify-center items-center h-screen">
+    <div className="flex flex-col min-h-screen">
+
+    <header>
+
+    <Nav></Nav>
+    </header>
+     
+    <main className="flex-grow flex justify-center items-center">
         {message.length > 0 && (
           <div
             className="bg-blue-100 border-t border-b border-blue-500 text-blue-700 px-4 py-3 mb-4"
@@ -205,6 +211,8 @@ export default function Login() {
             </span>
           </form>
         </div>
+      </main>
+        <Footer />
       </div>
     </>
   );

@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import Nav from "../components/Nav";
 import { createUserWithEmailAndPassword, sendEmailVerification, signOut } from "firebase/auth";
 import { useState } from "react";
+import Footer from "../components/Footer";
 
 
 export default function Register() {
@@ -86,8 +87,12 @@ export default function Register() {
 
   return (
     <>
-      <Nav></Nav>
-      <div className="flex flex-col justify-center items-center h-screen">
+  <div className="min-h-screen flex flex-col">
+
+    <header>
+    <Nav></Nav>
+    </header>
+      <main  className="flex-grow flex justify-center items-center">
         {
           message.length > 0 &&
           <div
@@ -186,6 +191,8 @@ export default function Register() {
             </span>
           </form>
         </div>
+      </main>
+        <Footer />
       </div>
     </>
   );

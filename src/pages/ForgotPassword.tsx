@@ -4,6 +4,7 @@ import Nav from "../components/Nav";
 import { Link } from "react-router-dom";
 import {sendPasswordResetEmail } from "firebase/auth";
 import { FirebaseAuth } from "../services/FirebaseAuth";
+import Footer from "../components/Footer";
  
 export default function ForgotPassword() {
     
@@ -54,10 +55,12 @@ export default function ForgotPassword() {
 
   return (
     <>
+
+    <div className="flex flex-col min-h-screen">
+
       <Nav />
 
-
-      <div className="flex flex-col justify-center items-center h-screen">
+      <main className="flex flex-grow items-center justify-center ">
 
       {
           message.length > 0 &&
@@ -120,6 +123,9 @@ export default function ForgotPassword() {
  
     </form>
   </div>
+</main>
+
+<Footer></Footer>
 </div>
     </>
   );

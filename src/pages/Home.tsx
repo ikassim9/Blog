@@ -28,33 +28,33 @@ export default function Home() {
 
   return (
     <>
-      <nav>
-        <Nav></Nav>
-      </nav>
-
-     {loading ? (
-
-      <SkeletonLoader />
-
-     ) :(
-      <section className="mt-8 sm:mt-20">
-        <section className="mb-8 text-center sm:mb-20">
-          <h1 className="text-2xl sm:text-4xl">
-            Connect with others through blogging
-          </h1>
-          <p className="text-base mt-4 sm:text-xl">
-            Explore, Share, and Connect - Your Online Community Awaits
-          </p>
-        </section>
-         <section className="grid p-3  gap-4 xl:w-1/2 m-auto">
-          {posts.map((post) => (
-            <Post key={post.id} post={post}/>
-          ))}
-        </section>
-        <Footer></Footer>
-      </section>
-     ) }
-      
+      {loading ? (
+        <SkeletonLoader />
+      ) : (
+        <div className="flex flex-col min-h-screen">
+          <header>
+            <nav>
+              <Nav></Nav>
+            </nav>
+            <section className="mt-8 mb-8 text-center sm:mb-20">
+              <h1 className="text-2xl sm:text-4xl">
+                Connect with others through blogging
+              </h1>
+              <p className="text-base mt-4 sm:text-xl">
+                Explore, Share, and Connect - Your Online Community Awaits
+              </p>
+            </section>
+          </header>
+          <main>
+            <section className="grid p-3  gap-4 xl:w-1/2 m-auto">
+              {posts.map((post) => (
+                <Post key={post.id} post={post} />
+              ))}
+            </section>
+          </main>
+          <Footer></Footer>
+        </div>
+      )}
     </>
   );
 }

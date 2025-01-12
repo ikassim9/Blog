@@ -7,6 +7,7 @@ import { useRef, useState } from "react";
 import TextEditor from "../components/TextEditor";
 import { url } from "inspector";
 import { useNavigate } from "react-router-dom";
+import Footer from "../components/Footer";
 
 export default function CreatePost() {
 
@@ -67,10 +68,12 @@ export default function CreatePost() {
 
   return (
     <>
+    <div className="min-h-screen flex flex-col">
+      <header>
       <Nav />
-
-
-      <div className="p-4 max-w-4xl mx-auto min-h-screen">
+      </header>
+      <main className="flex-grow flex items-center justify-center">
+      <div className="p-4 w-full max-w-4xl ">
 
       {message && <p className=" border-t border-b border-blue-500 text-blue-700 text-center text-lg mb-6">{message}</p>}
 
@@ -138,6 +141,9 @@ export default function CreatePost() {
             Create
           </button>
         </form>
+      </div>
+      </main>
+      <Footer />
       </div>
     </>
   );

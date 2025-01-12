@@ -4,6 +4,7 @@ import PostService from "../services/PostService";
 import TextEditor from "../components/TextEditor";
 import Nav from "../components/Nav";
 import SkeletonLoader from "../components/SkeletonLoader";
+import Footer from "../components/Footer";
 
 export default function PostDetail() {
   const { id } = useParams() as { id: string }; // to type to string
@@ -39,12 +40,13 @@ export default function PostDetail() {
 
   return (
     <>
-      <Nav />
+      
       {loading ? (
      <SkeletonLoader />
       ): (
-        <div className="min-h-screen p-2 mt-8">
-        <div className="xl:w-1/2 m-auto">
+        <div className="min-h-screen flex flex-col">
+          <Nav />
+        <main className="xl:w-1/2 m-auto p-2 mt-8 bg-red-300">
           <section>
             {post?.thumbnail && (
               <img
@@ -63,9 +65,11 @@ export default function PostDetail() {
               ref={descriptionRef}
             />
           </section>
-        </div>
-      </div>
+ 
 
+      </main>
+      <Footer />
+      </div>
       )}
      
     </>
