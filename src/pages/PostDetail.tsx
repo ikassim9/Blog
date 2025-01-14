@@ -22,9 +22,6 @@ export default function PostDetail() {
         const response = await PostService.getPostById(id);
         setPost(response.data);
         window.scrollTo(0, 0);
-
-        if (descriptionRef.current != null)
-          descriptionRef.current.setHTML(response.data.description);
       }
       catch(error){
         console.log(error);
@@ -46,7 +43,7 @@ export default function PostDetail() {
       ): (
         <div className="min-h-screen flex flex-col">
           <Nav />
-        <main className="xl:w-1/2 m-auto p-2 mt-8 bg-red-300">
+        <main className="xl:w-1/2 m-auto p-2 mt-8">
           <section>
             {post?.thumbnail && (
               <img
@@ -59,7 +56,7 @@ export default function PostDetail() {
           <section className="p-4  bg-white min-h-32	">
             <h1 className="">{post?.title}</h1>
             <TextEditor
-              content=""
+              content={post.description} 
               editable={false}
               mode=""
               ref={descriptionRef}
