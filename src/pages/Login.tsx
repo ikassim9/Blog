@@ -1,9 +1,9 @@
 import { Link, useNavigate } from "react-router-dom";
 import Nav from "../components/Nav";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { SubmitHandler, useForm, useFormState } from "react-hook-form";
 import { sendEmailVerification, signInWithEmailAndPassword, signOut  } from "firebase/auth";
 import { FirebaseAuth } from "../services/FirebaseAuth";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Auth from "../services/Auth";
 import Footer from "../components/Footer";
 
@@ -11,7 +11,6 @@ import Footer from "../components/Footer";
 export default function Login() {
   
   const [message, setMessage] = useState('');
-
   const navigate = useNavigate();
 
   // use to support typescript
@@ -19,19 +18,12 @@ export default function Login() {
     name: string;
     email: string;
     password: string;
-    emailExistError: string;
-    invalidCredentialsError: string;
-    internalError: string;
-    tooManyPasswordAttempts: string;
   };
 
   // validate only on form submission
   const {
     register,
     handleSubmit,
-    setError,
-    reset,
-    clearErrors,
     formState: { errors },
   } = useForm<FormValues>({
     mode: "onSubmit",
@@ -39,63 +31,46 @@ export default function Login() {
   });
 
   const loginUser: SubmitHandler<FormValues> = async (form: FormValues) => {
-
     // first validate on server
-
-    const {email, password } = form;
-
-    signInWithEmailAndPassword(FirebaseAuth, email, password)
-    .then(async (userCredential) => {
-      // Signed in
-      const user = userCredential.user;
-
-      const authToken = await user.getIdToken();
+    try {
+      const { email, password } = form;
+      const userCredential = await signInWithEmailAndPassword(
+        FirebaseAuth,
+        email,
+        password
+      );
+      const authToken = await userCredential.user.getIdToken();
 
       await Auth.login(authToken);
 
-      if(user.emailVerified) {
-
-      navigate("/")
- 
+      if (userCredential.user && userCredential.user.emailVerified) {
+        navigate("/");
+      } else {
+        // sign out and send verification email
+        await signOut(FirebaseAuth);
+        await sendEmailVerification(userCredential.user);
+        setMessage(
+          "A verification email has been sent to your email address. Please verify your email before attempting to login."
+        );
       }
-      else{
-           sendEmailVerification(user);
-
-          setMessage("A verification email has been sent to your email address.");
-        signOut(FirebaseAuth);
-      }
-
-      reset();
-      // ...
-    })
-    .catch((error) => {
+    } catch (error: any) {
       const errorCode = error.code;
       switch (errorCode) {
         case "auth/invalid-credential": {
-          setError("invalidCredentialsError", {
-            message: "We don't recognize this email or password",
-          });
-
+          setMessage("We don't recognize this email or password");
           break;
         }
-
         case "auth/too-many-requests": {
-          setError("tooManyPasswordAttempts", {
-            message: "Too many login failed attempts. Please reset your password or try again later"
-          });
-
+          setMessage(
+            "Too many login failed attempts. Please reset your password or try again later"
+          );
           break;
         }
 
-        case "ERR_BAD_RESPONSE":{
-          signOut(FirebaseAuth);
-          setError("internalError",  {message: "Something went wrong. Please try again" })
-        }
+        default:
+          setMessage("Something went wrong. Please try again");
       }
-      
-    });
-
-
+    }  
   };
 
   return (
@@ -106,10 +81,11 @@ export default function Login() {
     <header>
 
     <Nav></Nav>
+
     </header>
      
-    <main className="flex-grow flex justify-center items-center">
-        {message.length > 0 && (
+    <main className="flex-grow flex-col flex justify-center items-center">
+    {message.length > 0 && (
           <div
             className="bg-blue-100 border-t border-b border-blue-500 text-blue-700 px-4 py-3 mb-4"
             role="alert"
@@ -117,27 +93,8 @@ export default function Login() {
             <p className="text-sm">{message}</p>
           </div>
         )}
-        <div className="bg-white p-8 rounded shadow-2xl w-96">
+        <div className="bg-white p-8 rounded shadow-2xl w-96 mt-4">
           <h1 className="text-2xl mb-8 text-center">Welcome back</h1>
-          <p
-            data-cy="error_interalError"
-            className="mt-3 text-center text-sm text-red-500"
-          >
-            {errors.internalError?.message}
-          </p>
-          <p
-            data-cy="error_invalidCredentials"
-            className="mt-3 text-center text-sm text-red-500"
-          >
-            {errors.invalidCredentialsError?.message}
-          </p>
-          <p
-            data-cy="error_tooManyPasswordAttempts"
-            className="mt-3 text-center text-red-500"
-          >
-            {errors.tooManyPasswordAttempts?.message}
-          </p>
-
           <form
             action="POST"
             className="space-y-5 group"
@@ -152,11 +109,6 @@ export default function Login() {
                   pattern: {
                     value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
                     message: "Please enter a valid email",
-                  },
-                  onChange: () => {
-                    if (errors.invalidCredentialsError?.message) {
-                      clearErrors("invalidCredentialsError");
-                    }
                   },
                 })}
                 className="field"
@@ -175,12 +127,6 @@ export default function Login() {
               <input
                 {...register("password", {
                   required: "Please enter your password",
-
-                  onChange: () => {
-                    if (errors.invalidCredentialsError?.message) {
-                      clearErrors("invalidCredentialsError");
-                    }
-                  },
                 })}
                 className="field"
                 type="password"

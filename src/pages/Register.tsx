@@ -20,69 +20,57 @@ export default function Register() {
     name: string;
     email: string;
     password: string;
-    emailExistError: string;
-    internalError: string;
   };
 
   // validate only on form submission
   const {
     register,
     handleSubmit,
-    setError,
-    reset,
-    clearErrors,
+     reset,
     formState: { errors },
   } = useForm<FormValues>({
     mode: "onSubmit",
     reValidateMode: "onSubmit",
   });
 
+  // registers user in firebase and in server
 
   const registerUser: SubmitHandler<FormValues> = async (form: FormValues) => {
  
     const { name, email, password } = form;
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        FirebaseAuth,
+        email,
+        password
+      );
+      const user = userCredential.user;
 
- 
-    createUserWithEmailAndPassword(FirebaseAuth, email, password)
-      .then(async (userCredential: any) => {
-        const user = userCredential.user;
+      const authToken = await user.getIdToken();
 
-        const authToken = await user.getIdToken();
+      await Auth.register(name, authToken);
 
-        await Auth.register(name, authToken)
-          .then((response) => console.log(response.data))
-          .catch((error) => {
+      await sendEmailVerification(user);
 
-            setError("internalError", {
-              type: "Server",
-              message: "Something went wrong. Please try again later",
-            });
-            
-          });
+      setMessage(
+        "A verification email has been sent to your email address. Please login back in after verifying your email."
+      );
 
-          sendEmailVerification(user);
-
-          setMessage("A verification email has been sent to your email address");
-
-          signOut(FirebaseAuth);
-
-          reset();
-
-        navigate("/");
-        
-
-        // ...
-      })
-      .catch((error : any) => {
-        switch (error.code) {
-          case "auth/email-already-in-use": {
-            setError("emailExistError", {
-              type: "Server",
-              message: "This email is already taken",
-            });
-          }
+      reset();
+    } catch (error: any) {
+      switch (error.code) {
+        case "auth/email-already-in-use": {
+          setMessage("This email is already taken");
+          break;
         }
-      });
+
+        default:
+          setMessage("Something went wrong. Please try again later");
+      }
+    } finally {
+      // firebase by defaults automaticaly signs in user, need to manually sign themn out to verify email adress and re login
+      await signOut(FirebaseAuth);
+    }
   };
 
   return (
@@ -92,7 +80,7 @@ export default function Register() {
     <header>
     <Nav></Nav>
     </header>
-      <main  className="flex-grow flex justify-center items-center">
+      <main  className="flex-grow flex flex-col justify-center items-center">
         {
           message.length > 0 &&
           <div
@@ -105,7 +93,7 @@ export default function Register() {
           </div>
         }
 
-        <div className="bg-white p-8 rounded shadow-2xl w-96">
+        <div className="bg-white p-8 rounded shadow-2xl w-96 mt-4">
           <h1 className="text-2xl mb-8 text-center">Create your account</h1>
 
           <form
@@ -139,22 +127,12 @@ export default function Register() {
                     value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
                     message: "Please enter a valid email",
                   },
-
-                  onChange: () => {
-                    if (errors.emailExistError?.message) {
-                      clearErrors("emailExistError");
-                    }
-                  },
                 })}
                 className="field"
                 type="email"
                 placeholder="john1234@gmail.com"
                 data-cy="input_email"
               />
-
-              <p data-cy="error_email" className="mt-3 text-red-500">
-                {errors.email?.message || errors.emailExistError?.message}
-              </p>
             </div>
 
             <div>

@@ -11,14 +11,11 @@ export default function ForgotPassword() {
 
     const [message, setMessage] = useState('');
 
-
-
     type FormValues = {
         
         email: string;
  
       };
-
 
   // validate only on form submission
   const {
@@ -60,7 +57,7 @@ export default function ForgotPassword() {
 
       <Nav />
 
-      <main className="flex flex-grow items-center justify-center ">
+      <main className="flex flex-grow flex-col items-center justify-center ">
 
       {
           message.length > 0 &&
@@ -73,7 +70,7 @@ export default function ForgotPassword() {
             </p>
           </div>
         }
-  <div className="bg-white p-8 rounded shadow-2xl w-96">
+  <div className="bg-white p-8 rounded shadow-2xl w-96 mt-4">
     
     <h1 className="text-2xl mb-8 text-center">Reset your password</h1>
     <p data-cy="error_email" className="mt-3 text-center text-sm text-red-500">{}</p>
