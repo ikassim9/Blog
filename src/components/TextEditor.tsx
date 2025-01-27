@@ -42,7 +42,7 @@ const TextEditor = forwardRef<TextEditorRef, TextEditorProps>(({content, editabl
 
   return (
     <>
-      <div className="container mx-auto max-w-4x1 my-8 outline-none">
+      <div>
         {editable && <MenuBar editor={editor}/>}
         <EditorContent editor={editor} />
       </div>

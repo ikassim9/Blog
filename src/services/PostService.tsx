@@ -31,7 +31,12 @@ const PostService = {
 
 
     return await axios.get(url);
-  }
+  },
+
+ async GetUserPosts(profileId: string) {
+    const url = `${api}/post/getPostByUserId/${profileId}`;
+    return await axios.get(url); 
+  },
 };
 
 export default PostService;
