@@ -1,11 +1,9 @@
-import { SubmitHandler, useController, useForm } from "react-hook-form";
- import PostService from "../services/PostService";
+import PostService from "../services/PostService";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { FirebaseAuth } from "../services/FirebaseAuth";
 import Nav from "../components/Nav";
 import { useRef, useState } from "react";
 import TextEditor from "../components/TextEditor";
-import { url } from "inspector";
 import { useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
 
@@ -13,15 +11,17 @@ export default function CreatePost() {
 
   const [currentUser] = useAuthState(FirebaseAuth);
   const [message, setMessage] = useState('');
-  const [error, setErrorMessage] = useState('');
   const  titleRef = useRef<any>(null);
   const descriptionRef = useRef<any>(null); 
   const [selectedImage, setSelectedImage] = useState<any>();
   const formRef = useRef<any>();
+  const [isSubmitting, setIsSubmittting] = useState(false);
   
   const navigate = useNavigate();
 
   const handleFileChange = (event: any) => {
+
+ 
     const file = event.target.files[0];
     if (file) {
       setSelectedImage(file);
@@ -30,42 +30,37 @@ export default function CreatePost() {
 
  
   const createPost= async (event: any) => {
-
     event.preventDefault();
- 
+
     let title = titleRef.current.value;
     let description = descriptionRef.current.getHTML();
- 
+
     const formData = new FormData();
-    formData.append('title', title)
-    formData.append('description', description);
-    formData.append('image', selectedImage);
-    
-    if(title == null || title === ''){
-        setMessage("Please enter a title")
-        return;
+    formData.append("title", title);
+    formData.append("description", description);
+    formData.append("image", selectedImage);
+
+    if (title == null || title === "") {
+      setMessage("Please enter a title");
+      return;
     }
 
+    try {
+      if (currentUser) {
+        const authToken = await currentUser.getIdToken();
+        setIsSubmittting(true);
+        await PostService.createPost(formData, authToken);
 
-    if (currentUser) {
-      const authToken = await currentUser.getIdToken();
-
-      await PostService.createPost(formData, authToken)
-        .then((response) => {
-
-          navigate("/")
- 
-          
-        })
-        .catch((error) => {
-            setErrorMessage('Something went wrong. Please try again');
-            setMessage('Something went wrong. Please try again');
-        });
+        navigate("/");
+      }
+    } catch (error) {
+      setMessage("Something went wrong. Please try again");
     }
-    
 
+    finally {
+      setIsSubmittting(false);
+    }
   };
-
   return (
     <>
     <div className="min-h-screen flex flex-col">
@@ -136,9 +131,10 @@ export default function CreatePost() {
           <button
             type="submit"
             data-cy="submitBtn"
+            disabled={isSubmitting}
             className="bg-primary text-white  p-2 rounded-md w-full"
           >
-            Create
+            {isSubmitting ? "Publishing..." : "Publish"}
           </button>
         </form>
       </div>

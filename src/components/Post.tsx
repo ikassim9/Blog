@@ -23,7 +23,7 @@ function Post({post, showToolBar, id} : {post: IPost, showToolBar: boolean, id: 
           {
             showToolBar && !loading && user && user.uid === id && ( 
              <div className="mt-auto">
-            <Toolbar />
+            <Toolbar post={post}/>
           </div>
             )}
         </div>
