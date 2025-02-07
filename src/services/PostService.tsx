@@ -48,6 +48,20 @@ const PostService = {
     return await axios.put(url, post, {      
       headers: headers,
     });
+  },
+
+  async deletePost(authToken: string, postId: string){
+
+    const url = `${api}/post/${postId}`;
+    const headers = {
+      Authorization: "Bearer " + authToken,
+    
+    };
+    
+    return await axios.delete(url, {      
+      headers: headers,
+    });
+   
   }
 };
 

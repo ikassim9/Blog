@@ -1,17 +1,26 @@
 import { Link, useNavigate } from "react-router-dom";
 import { IPost } from "../model/IPost";
 
-export default function Toolbar ({post} : {post: IPost}) {
+interface IToolbar {
+    onEdit: () => void;
+    onDelete: () => void;
+    
+    }
 
-    const navigate = useNavigate();
+export default function Toolbar ({onEdit, onDelete} : IToolbar) {
+
+ 
+
 
     const handleEdit = (event : any) => {
         event.preventDefault();
-        navigate(`/posts/${post.id}/edit`);
+        onEdit();
+        
     };
 
         const handleDelete = (event : any) => {
         event.preventDefault();
+        onDelete();
     
     };
 

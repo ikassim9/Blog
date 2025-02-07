@@ -14,9 +14,6 @@ export default function PostGallery({posts, showToolBar} : {posts: IPost[], show
  const { id } = useParams() as { id: string }; // to type to string
      return (
         <>
-            {loading ? (
-                <SkeletonLoader />
-              ) : (
               <main>
                 <section className="grid p-3  gap-4 xl:w-1/2 m-auto">
                   {posts.map((post) => (
@@ -24,7 +21,7 @@ export default function PostGallery({posts, showToolBar} : {posts: IPost[], show
                   ))}
                 </section>
               </main>
-              )}
+  
         </>
       );
 
