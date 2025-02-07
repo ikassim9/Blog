@@ -31,6 +31,37 @@ const PostService = {
 
 
     return await axios.get(url);
+  },
+
+ async GetUserPosts(profileId: string) {
+    const url = `${api}/post/getPostByUserId/${profileId}`;
+    return await axios.get(url); 
+  },
+
+
+  async updatePost(postId: string, post: any, authToken: string, isThumbnailRemoved: boolean) {
+    const url = `${api}/post/${postId}`;
+    const headers = {
+      Authorization: "Bearer " + authToken,
+    
+    };
+    return await axios.put(url, post, {      
+      headers: headers,
+    });
+  },
+
+  async deletePost(authToken: string, postId: string){
+
+    const url = `${api}/post/${postId}`;
+    const headers = {
+      Authorization: "Bearer " + authToken,
+    
+    };
+    
+    return await axios.delete(url, {      
+      headers: headers,
+    });
+   
   }
 };
 

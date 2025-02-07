@@ -4,7 +4,7 @@ import {FirebaseAuth} from "../services/FirebaseAuth";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import Nav from "../components/Nav";
-import { createUserWithEmailAndPassword, sendEmailVerification, signOut } from "firebase/auth";
+import { createUserWithEmailAndPassword, sendEmailVerification, signOut, updateProfile } from "firebase/auth";
 import { useState } from "react";
 import Footer from "../components/Footer";
 
@@ -45,6 +45,10 @@ export default function Register() {
         password
       );
       const user = userCredential.user;
+
+      // set display name of user 
+
+      await updateProfile(user, { displayName: name });
 
       const authToken = await user.getIdToken();
 

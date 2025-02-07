@@ -5,12 +5,17 @@ import PostService from "../services/PostService";
 import { IPost } from "../model/IPost";
 import SkeletonLoader from "../components/SkeletonLoader";
 import Footer from "../components/Footer";
+import PostGallery from "../components/PostGallery";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { FirebaseAuth } from "../services/FirebaseAuth";
+import { onAuthStateChanged } from "firebase/auth";
 
 export default function Home() {
  
   const [posts, setPost] = useState<IPost[]>([]);
   const [loading, setLoading] = useState(true);
- 
+  const [user] = useAuthState(FirebaseAuth);
+
   useEffect(() => {
     const getPosts = async () => {
       try {
@@ -26,12 +31,36 @@ export default function Home() {
     getPosts();
   }, []);
 
+
+
+
+  // useEffect(() => {
+
+  useEffect(() => {
+    const unsubscribe = FirebaseAuth.onAuthStateChanged((currentUser) => {
+ 
+      let user =  localStorage.getItem('user');
+
+      // sets or remove user in local storage
+      if (currentUser && currentUser?.uid === user) return;
+
+      if (currentUser && currentUser?.uid !== user) {
+        localStorage.setItem("user", currentUser.uid);
+      } else if (currentUser == null) {
+        localStorage.removeItem("user");
+      }
+
+    });
+    return unsubscribe; 
+  }, [user]);  
+     
+ 
   return (
     <>
       {loading ? (
         <SkeletonLoader />
       ) : (
-        <div className="flex flex-col min-h-screen">
+        <div className="flex flex-col min-h-screen bg-gray-100">
           <header>
             <nav>
               <Nav></Nav>
@@ -45,13 +74,7 @@ export default function Home() {
               </p>
             </section>
           </header>
-          <main>
-            <section className="grid p-3  gap-4 xl:w-1/2 m-auto">
-              {posts.map((post) => (
-                <Post key={post.id} post={post} />
-              ))}
-            </section>
-          </main>
+          <PostGallery posts={posts} showToolBar={false}/>
           <Footer></Footer>
         </div>
       )}
