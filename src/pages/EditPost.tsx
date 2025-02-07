@@ -30,6 +30,12 @@ export default function EditPost() {
     const getPostDetail = async () => {
       try {
         const response = await PostService.getPostById(id);
+
+        if(currentUser?.uid !== response.data.userId) {
+          navigate('/')
+          return;
+        }
+  
         setPost(response.data);
         window.scrollTo(0, 0);
 
