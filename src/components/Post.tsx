@@ -89,7 +89,7 @@ function Post({post, showToolBar, id} : {post: IPost, showToolBar: boolean, id: 
           <img
             src={post.thumbnail}
             alt="Post Thumbnail"
-            className="w-32 object-cover"
+            className="w-48 object-cover"
           />
         )}
       </Link>

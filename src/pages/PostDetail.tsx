@@ -43,7 +43,7 @@ export default function PostDetail() {
       ): (
         <div className="min-h-screen flex flex-col">
           <Nav />
-        <main className="xl:w-1/2 m-auto p-2 mt-8">
+        <main className="lg:w-1/2 lg:m-auto p-2 mt-8">
           <section>
             {post?.thumbnail && (
               <img
