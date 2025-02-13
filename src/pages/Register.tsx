@@ -137,6 +137,10 @@ export default function Register() {
                 placeholder="john1234@gmail.com"
                 data-cy="input_email"
               />
+
+              <p data-cy="error_name" className="mt-3 text-red-500">
+                {errors.email?.message}
+              </p>
             </div>
 
             <div>
