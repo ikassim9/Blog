@@ -1,12 +1,15 @@
-# **API to display marvel characters and its related comics**
+# Blog Application
 
-### This application will users to peform crud operations by creating/editing and deleting their own blogs. It will also viewing other users blog.
+This application allows users to:
 
- <br>
+- **Create, Edit, and Delete** their own blogs.
+- **View** blogs created by other users.
+- **Register and Log In** to manage their accounts securely.
+- **Reset passwords** via a forgot-password functionality.
+ 
 
 # Getting Started
 
-<br>
 
 ### You will first need to go to [firebase](https://firebase.google.com/) website. Go to console and create a project. Go to project setting and add a web application. Copy the firebase config into env mentioned below
 
