@@ -18,13 +18,13 @@ function DeleteConfirmation({ isOpen, onClose, onDelete }: DeleteConfirmationPro
         <div className="flex justify-center gap-8 mt-4">
           <button 
            onClick={onClose}
-             className="px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-200"
+             className="w-20 p-2 bg-gray-300 rounded-lg hover:bg-green-400"
           >
             Cancel
           </button>
           <button 
             onClick={onDelete} 
-            className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-400"
+            className="w-20   bg-red-600 text-white rounded-lg hover:bg-green-400"
           >
             Delete
           </button>
