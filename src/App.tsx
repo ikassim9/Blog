@@ -25,7 +25,7 @@ export default function App() {
          {/* private routes */}
       <Route path='/users/create-post' element= {<PrivateRoute><CreatePost /></PrivateRoute>}></Route>
       <Route path='/posts/:id/edit' element= {<PrivateRoute><EditPost /></PrivateRoute>}></Route>
-      <Route path='/users/:id' element= {<PrivateRoute><UserProfile /></PrivateRoute>}></Route>
+      <Route path='/users/self' element= {<PrivateRoute><UserProfile /></PrivateRoute>}></Route>
 
        {/* 404 Not Found Route */}
       <Route path="*" element={<NotFoundPage />} />

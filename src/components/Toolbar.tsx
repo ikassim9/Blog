@@ -8,10 +8,6 @@ interface IToolbar {
     }
 
 export default function Toolbar ({onEdit, onDelete} : IToolbar) {
-
- 
-
-
     const handleEdit = (event : any) => {
         event.preventDefault();
         onEdit();
@@ -23,7 +19,6 @@ export default function Toolbar ({onEdit, onDelete} : IToolbar) {
         onDelete();
     
     };
-
 
     return (
         <div className="flex gap-2">

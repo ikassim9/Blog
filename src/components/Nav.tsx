@@ -62,7 +62,7 @@ export default function Nav() {
           className="absolute right-0 mt-2 w-40 bg-white shadow-lg rounded-lg border border-gray-200  "
         >
            <Link className="block py-2 px-4 text-gray-700 hover:bg-gray-100 hover:text-gray-900 cursor-pointer"
-          to={`/users/${user.uid}`}
+          to={`/users/self`}
            >
             Profile
           </Link>

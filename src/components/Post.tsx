@@ -79,7 +79,7 @@ function Post({post, showToolBar, id} : {post: IPost, showToolBar: boolean, id: 
             editable={false}
           />
           {
-            showToolBar && !loading && user && user.uid === id && ( 
+            showToolBar   && ( 
              <div className="mt-auto">
             <Toolbar  onEdit={onEdit} onDelete={openModal}/>
           </div>
