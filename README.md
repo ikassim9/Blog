@@ -1,7 +1,6 @@
 # Blog Application
-
+click [here](https://github.com/ikassim9/Blog-Server) to see server code
 This application allows users to:
-
 - **Create, Edit, and Delete** their own blogs.
 - **View** blogs created by other users.
 - **Register and Log In** to manage their accounts securely.
