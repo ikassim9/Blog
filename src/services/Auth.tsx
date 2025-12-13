@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const api = process.env.REACT_APP_API_ENDPOINT;
+const api = import.meta.env.VITE_API_ENDPOINT;
 
 const Auth = {
   async register(name: string, authToken: string) {

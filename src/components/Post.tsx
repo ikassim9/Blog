@@ -1,5 +1,5 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { IPost } from "../model/IPost";
+import type { IPost } from "../model/IPost";
 import TextEditor from "./TextEditor";
 import Toolbar from "./Toolbar";
 import { useAuthState } from "react-firebase-hooks/auth";

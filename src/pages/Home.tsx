@@ -1,15 +1,13 @@
 import { useEffect, useState } from "react";
 import Nav from "../components/Nav";
-import Post from "../components/Post";
 import PostService from "../services/PostService";
-import { IPost } from "../model/IPost";
+import type { IPost } from "../model/IPost";
 import SkeletonLoader from "../components/SkeletonLoader";
 import Footer from "../components/Footer";
 import PostGallery from "../components/PostGallery";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { FirebaseAuth } from "../services/FirebaseAuth";
-import { onAuthStateChanged } from "firebase/auth";
-
+ 
 export default function Home() {
  
   const [posts, setPost] = useState<IPost[]>([]);
@@ -37,9 +35,9 @@ export default function Home() {
   // useEffect(() => {
 
   useEffect(() => {
-    const unsubscribe = FirebaseAuth.onAuthStateChanged((currentUser) => {
+    const unsubscribe = FirebaseAuth.onAuthStateChanged((currentUser: { uid: string  } | null) => {
  
-      let user =  localStorage.getItem('user');
+      const user =  localStorage.getItem('user');
 
       // sets or remove user in local storage
       if (currentUser && currentUser?.uid === user) return;

@@ -1,8 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital@1&display=swap');
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+ @config "../tailwind.config.js";
 
 
 @layer base {
@@ -11,9 +10,13 @@
       bg-background
     }
   
-    
+    button:not([disabled]),
+  [role="button"]:not([disabled]) {
+    cursor: pointer;
   }
 
+  }
+ 
   .tiptap ol {
     list-style: revert;
     padding-left: 1rem;

@@ -1,6 +1,3 @@
-import { Link, useNavigate } from "react-router-dom";
-import { IPost } from "../model/IPost";
-
 interface IToolbar {
     onEdit: () => void;
     onDelete: () => void;
