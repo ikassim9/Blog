@@ -1,7 +1,6 @@
 import axios from "axios";
-import { IPost } from "../model/IPost";
-
-const api = process.env.REACT_APP_API_ENDPOINT;
+ 
+const api =import.meta.env.VITE_API_ENDPOINT;
 
 const PostService = {
   async createPost(post: any, authToken: string) {
@@ -33,9 +32,14 @@ const PostService = {
     return await axios.get(url);
   },
 
- async GetUserPosts(profileId: string) {
-    const url = `${api}/post/getPostByUserId/${profileId}`;
-    return await axios.get(url); 
+ async GetUserPosts(authToken: string) {
+
+     const headers = {
+      Authorization: "Bearer " + authToken,
+    
+    };
+    const url = `${api}/post/getPostByUserId`;
+    return await axios.get(url, { headers: headers }); 
   },
 
 

@@ -1,5 +1,5 @@
 import { useAuthState } from "react-firebase-hooks/auth";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FirebaseAuth } from "../services/FirebaseAuth";
 import { signOut } from "firebase/auth";
 import {  SquarePen, UserRound } from "lucide-react";
@@ -11,10 +11,13 @@ export default function Nav() {
   
   const [user, loading] = useAuthState(FirebaseAuth);
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
 
   const handleLogout = () => {
 
     signOut(FirebaseAuth);
+
+    navigate("/");
   }
 
   return loading ? (
@@ -59,7 +62,7 @@ export default function Nav() {
           className="absolute right-0 mt-2 w-40 bg-white shadow-lg rounded-lg border border-gray-200  "
         >
            <Link className="block py-2 px-4 text-gray-700 hover:bg-gray-100 hover:text-gray-900 cursor-pointer"
-          to={`/users/${user.uid}`}
+          to={`/users/self`}
            >
             Profile
           </Link>

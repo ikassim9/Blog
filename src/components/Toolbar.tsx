@@ -1,6 +1,3 @@
-import { Link, useNavigate } from "react-router-dom";
-import { IPost } from "../model/IPost";
-
 interface IToolbar {
     onEdit: () => void;
     onDelete: () => void;
@@ -8,10 +5,6 @@ interface IToolbar {
     }
 
 export default function Toolbar ({onEdit, onDelete} : IToolbar) {
-
- 
-
-
     const handleEdit = (event : any) => {
         event.preventDefault();
         onEdit();
@@ -23,7 +16,6 @@ export default function Toolbar ({onEdit, onDelete} : IToolbar) {
         onDelete();
     
     };
-
 
     return (
         <div className="flex gap-2">

@@ -6,9 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import TextEditor from "../components/TextEditor";
 import { useNavigate, useParams } from "react-router-dom";
 import Footer from "../components/Footer";
-import SkeletonLoader from "../components/SkeletonLoader";
-import { set } from "cypress/types/lodash";
- 
+import SkeletonLoader from "../components/SkeletonLoader"; 
 
 export default function EditPost() {
   const [currentUser] = useAuthState(FirebaseAuth);
